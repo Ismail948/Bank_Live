@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #2d3e50;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+        }
+        .account-details {
+            margin: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: inline-block;
+            width: 400px; /* Adjust width as needed */
+            text-align: left; /* Align text left for better readability */
+        }
+        .details {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .transaction-form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"], .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            var transactionType = document.getElementById("transactionType").value;
+            var transactionAmount = document.getElementById("transactionAmount").value;
+            var accNum = document.getElementById("accNum").innerText.trim(); // Get accNum from HTML
+
+            var baseUrl = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
+
+            var url;
+            	 if (transactionType === "deposit") {
+                     url = baseUrl + "/deposited/"+accNum + "/" + transactionAmount;
+                 }
+            else if(transactionType === "withdraw") {
+            	 url = baseUrl +"/withdrawn/"+ accNum + "/" + transactionAmount;
+            }
+            	 window.location.href = url;
+        }
+            function goToHomePage() {
+                window.location.href =  window.location.origin;
+            
+            }
+        
+    </script>
+</head>
+<body>
+    <header>User Account Details</header>
+    <div class="account-details">
+        <div class="details">
+            <p><strong>Account Number:</strong> <span id="accNum" th:text="${acctail.acc_num}">123456789</span></p>
+            <p><strong>Account Holder:</strong> <span th:text="${acctail.acc_holder}">John Doe</span></p>
+            <p><strong>Balance:</strong> <span th:text="${acctail.acc_bal}">$5000</span></p>
+        </div>
+        <div class="transaction-form">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="transactionType">Transaction Type:</label>
+                    <select id="transactionType">
+                        <option value="deposit">Deposit</option>
+                        <option value="withdraw">Withdraw</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Amount:</label>
+                    <input type="text" id="transactionAmount" placeholder="Enter Amount" required>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+                 <button type="button" class="submit-button" onclick="goToHomePage()">Finished Transactions</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

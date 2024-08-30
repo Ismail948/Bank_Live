@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create New Account</title>
+<style>
+/* General styling */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f4f8;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+header {
+	background-color: #2d3e50;
+	padding: 20px;
+	color: white;
+	font-size: 24px;
+}
+
+.container {
+	margin-top: 50px;
+}
+
+.form-container {
+	display: inline-block;
+	padding: 20px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	animation: fadeIn 1s ease-in-out;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	font-size: 18px;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+.submit-button {
+	display: inline-block;
+	margin-top: 20px;
+	padding: 15px 30px;
+	font-size: 18px;
+	color: white;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+	background-color: #0056b3;
+}
+
+@keyframes fadeIn {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1;
+}
+}
+</style>
+
+</head>
+<body>
+	<header>Create New Account</header>
+	<div class="container">
+		<div class="form-container">
+			<form method="post" action="/createAccount">
+				<div class="form-group">
+					<label for="accountHolder">Account Holder:</label> <input
+						type="text" id="accountHolder" name="acc_holder" required>
+				</div>
+				<div class="form-group">
+					<label for="initialBalance">Initial Balance:</label> <input
+						type="number" id="initialBalance" name="acc_bal" min="0" required>
+				</div>
+				<button type="submit" class="submit-button">Create Account</button>
+			</form>
+
+		</div>
+	</div>
+</body>
+</html>

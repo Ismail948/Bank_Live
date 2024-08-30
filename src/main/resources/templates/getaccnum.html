@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Account Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #2d3e50;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            display: inline-block;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+            var accountNumber = document.getElementById("accountNumber").value;
+            try {
+                const response = await fetch(window.location.origin+"/getaccnum/" + accountNumber, {
+                    method: 'GET',
+                });
+                
+                if (response.ok) {
+                    window.location.replace(window.location.origin+"/getaccnum/" + accountNumber);
+                } else {
+                    alert('Account with this account number not found');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to detect account with this number');
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>Enter Account Number</header>
+    <div class="container">
+        <div class="form-container">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="accountNumber">Account Number:</label>
+                    <input type="text" id="accountNumber" name="accountNumber" required>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
