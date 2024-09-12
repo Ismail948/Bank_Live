@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            background-color: #2d3e50;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .account-details {
+            margin: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .details {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .details p {
+            margin: 10px 0;
+        }
+        .transaction-form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .form-group input[type="text"], 
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .submit-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .submit-button {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .submit-button:last-child {
+            margin-right: 0;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            header {
+                font-size: 20px;
+            }
+            .details {
+                font-size: 16px;
+            }
+            .form-group input[type="text"], .form-group select {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .submit-button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .account-details {
+                width: 95%;
+            }
+            .details {
+                font-size: 14px;
+            }
+            .form-group input[type="text"], .form-group select {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .submit-button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            var transactionType = document.getElementById("transactionType").value;
+            var transactionAmount = document.getElementById("transactionAmount").value;
+            var accNum = document.getElementById("accNum").innerText.trim(); // Get accNum from HTML
+
+            var baseUrl = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
+
+            var url;
+            if (transactionType === "deposit") {
+                url = baseUrl + "/deposited/" + accNum + "/" + transactionAmount;
+            } else if(transactionType === "withdraw") {
+                url = baseUrl + "/withdrawn/" + accNum + "/" + transactionAmount;
+            }
+            window.location.href = url;
+        }
+
+        function goToHomePage() {
+            window.location.href = window.location.origin;
+        }
+    </script>
+</head>
+<body>
+    <header>User Account Details</header>
+    <div class="account-details">
+        <div class="details">
+            <p><strong>Account Number:</strong> <span id="accNum" th:text="${acctail.acc_num}">9999999999</span></p>
+            <p><strong>Account Holder:</strong> <span th:text="${acctail.acc_holder}">Name</span></p>
+            <p><strong>Balance:</strong> <span th:text="${acctail.acc_bal}">$0000</span></p>
+        </div>
+        <div class="transaction-form">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="transactionType">Transaction Type:</label>
+                    <select id="transactionType">
+                        <option value="deposit">Deposit</option>
+                        <option value="withdraw">Withdraw</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Amount:</label>
+                    <input type="text" id="transactionAmount" placeholder="Enter Amount" required>
+                </div>
+                <div class="submit-buttons">
+                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="button" class="submit-button" onclick="goToHomePage()">Finished Transactions</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
